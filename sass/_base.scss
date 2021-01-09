@@ -1,0 +1,12 @@
+$default-font-color    : #000;
+$background-color      : #4a90e2;
+$container-bgcolor     : #f2f2f2;
+$container-bordercolor : #000;
+
+/*https://github.com/sass-mq/sass-mq*/
+@mixin mq($size) {
+    @media only screen and (min-width: $size) {
+        @content;
+    }
+}
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+</head>
+<body>
+    <main>
+        <section class="newItemEntry">
+            <form id="itemEntryForm">
+                <label for="newItem">Enter a new to-do item</label>
+                <input type="text" id="newItem" size="40" autocomplete="off" placeholder="Add item" tabindex="0">
+                <button id="addItem" class="button" title="Add new item" aria-label="Add a new item to the list" ></button>
+            </form>
+        </section>
+        <section class="listContainer">
+            <h1>To-Do List</h1>
+            <button id="clearItems" class="button" title="Clear selected items" aria-label="Remove all done items from the list" tabindex="0">Clear</button>
+            <hr />
+            <div id="listItems">
+                <div class="item">
+                    <input type="checkbox" id="1" tabindex="0">
+                    <label for="1">TEST DATA</label>
+                </div>
+                <div class="item">
+                    <input type="checkbox" id="1" tabindex="0">
+                    <label for="1">TEST DATA</label>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html> 

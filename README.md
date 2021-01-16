@@ -8,6 +8,6 @@ A simple ToDo list application that will be using :
 To train myself in the aforementioned technologies.
 
 # Where can I see it ?
-In progress...
+https://jean-oikonomou.github.io/SASS_JS-toDoList/
 
 P.S. : I'm using Vim for the first time while developing this web app.

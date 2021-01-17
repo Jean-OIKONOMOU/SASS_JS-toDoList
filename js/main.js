@@ -1,6 +1,11 @@
 import toDoItem from "./todoitem.js";
 import toDoList from "./todolist.js";
 
+/* TODO: create function to check if user is on phone or pc and then show message about the use of the TAB button. check how I can add that msg to the screen reader too. 
+https://flow.ai/blog/check-if-mobile-or-desktop-pc
+.PC_INFO
+*/
+
 const ToDoList = new toDoList();
 
 /* check if the DOM is fully loaded and ready to be fiddled with*/
@@ -20,10 +25,10 @@ const initApp = () => {
 };
 
 const refreshThePage = () => {
-  // clearListDisplay();
+  clearListDisplay();
   renderList();
-  // clearItemEntryField();
-  // setFocusOnItemEntry();
+  clearItemEntryField();
+  setFocusOnItemEntry();
 };
 
 const clearListDisplay = () => {
@@ -55,7 +60,7 @@ const buildListItem = (item) => {
   check.type = "checkbox";
   check.id = item.getId();
   check.tabIndex = 0;
-  // add a click listener to the checkbox so that we can remove it from the toDoList object.
+  addClickListenerToCheckbox(check);
   const label = document.createElement("label");
   label.htmlFor = item.getId();
   label.textContent = item.getItem();
@@ -69,5 +74,16 @@ const addClickListenerToCheckbox = (checkbox) => {
   addClickListenerToCheckbox.addEventListener("click", (event) => {
     toDoList.removeItemFromList(checkbox.id);
     // TODO: remove it from web storage api too !!! 1:13
+    setTimeout(() => {
+      refreshThePage();
+    }, 1000);
   });
+};
+
+const clearItemEntryField = () => {
+  document.getElementById("newItem").value = "";
+};
+
+const setFocusOnItemEntry = () => {
+  document.getElementById("newItem").focus();
 };

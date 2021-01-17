@@ -1,12 +1,12 @@
-import toDoItem from "./todoitem.js";
-import toDoList from "./todolist.js";
+import ToDoItem from "./todoitem.js";
+import ToDoList from "./todolist.js";
 
 /* TODO: create function to check if user is on phone or pc and then show message about the use of the TAB button. check how I can add that msg to the screen reader too. 
 https://flow.ai/blog/check-if-mobile-or-desktop-pc
 .PC_INFO
 */
 
-const ToDoList = new toDoList();
+const toDoList = new ToDoList();
 
 /* check if the DOM is fully loaded and ready to be fiddled with*/
 document.addEventListener("readystatechange", (event) => {
@@ -17,7 +17,11 @@ document.addEventListener("readystatechange", (event) => {
 
 const initApp = () => {
   // event listeners
-
+  const itemEntryForm = document.getElementById("itemEntryForm");
+  itemEntryForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    processSubmission();
+  });
   // procedural
   // load list object from web storage API
   // refresh the page
@@ -47,7 +51,7 @@ const deleteContents = (parentElement) => {
 };
 
 const renderList = () => {
-  const list = ToDoList.getList();
+  const list = toDoList.getList();
   list.forEach((item) => {
     buildListItem(item);
   });
@@ -71,12 +75,12 @@ const buildListItem = (item) => {
 };
 
 const addClickListenerToCheckbox = (checkbox) => {
-  addClickListenerToCheckbox.addEventListener("click", (event) => {
+  checkbox.addEventListener("click", (event) => {
     toDoList.removeItemFromList(checkbox.id);
     // TODO: remove it from web storage api too !!! 1:13
     setTimeout(() => {
       refreshThePage();
-    }, 1000);
+    }, 500);
   });
 };
 
@@ -86,4 +90,34 @@ const clearItemEntryField = () => {
 
 const setFocusOnItemEntry = () => {
   document.getElementById("newItem").focus();
+};
+
+const processSubmission = () => {
+  const newEntryText = getNewEntry();
+  if (!newEntryText.length) return;
+  const nextItemId = calcNextItemId();
+  const toDoItem = createNewItem(nextItemId, newEntryText);
+  toDoList.addItemToList(toDoItem);
+  // TODO: update web storage API with the new data
+  refreshThePage();
+};
+
+const getNewEntry = () => {
+  return document.getElementById("newItem").value.trim();
+};
+
+const calcNextItemId = () => {
+  let nextItemId = 1;
+  const list = toDoList.getList();
+  if (list.length > 0) {
+    nextItemId = list[list.length - 1].getId() + 1;
+  }
+  return nextItemId;
+};
+
+const createNewItem = (itemId, itemText) => {
+  const toDo = new ToDoItem();
+  toDo.setId(itemId);
+  toDo.setItem(itemText);
+  return toDo;
 };

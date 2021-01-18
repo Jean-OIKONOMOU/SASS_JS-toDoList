@@ -30,6 +30,22 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    max-width: 100%;
+    max-height: 100%;
     -webkit-transition: opacity 0.5s ease-in-out;
     -moz-transition: opacity 0.5s ease-in-out;
     -ms-transition: opacity 0.5s ease-in-out;
@@ -39,14 +55,20 @@
       text-align: center;
       width: 2.5rem;
       height: 2.5rem;
-      min-width: 48px; /*google recommends this*/
-      min-height: 48px;
+      min-width: 50px; /*google recommends this*/
+      min-height: 50px;
+      max-width: 50px;
+      max-height: 50px;
       cursor: pointer;
       margin-right: 1.5rem;
     }
 
     input[type="checkbox"]:focus + label {
       text-decoration: underline;
+    }
+
+    input[type="checkbox"]:hover + label {
+      font-weight: bold;
     }
 
     label {

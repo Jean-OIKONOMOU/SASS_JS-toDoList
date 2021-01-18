@@ -52,6 +52,7 @@ const deleteContents = (parentElement) => {
 
 const renderList = () => {
   const list = toDoList.getList();
+  log(list);
   list.forEach((item) => {
     buildListItem(item);
   });
@@ -77,7 +78,8 @@ const buildListItem = (item) => {
 const addClickListenerToCheckbox = (checkbox) => {
   checkbox.addEventListener("click", (event) => {
     toDoList.removeItemFromList(checkbox.id);
-    // TODO: remove it from web storage api too !!! 1:13
+    fadeOutAnimation(checkbox.id);
+    // TODO: remove it from web storage api too !!!
     setTimeout(() => {
       refreshThePage();
     }, 500);
@@ -120,4 +122,14 @@ const createNewItem = (itemId, itemText) => {
   toDo.setId(itemId);
   toDo.setItem(itemText);
   return toDo;
+};
+
+const log = (obj) => {
+  console.log(obj);
+};
+
+const fadeOutAnimation = (id) => {
+  let element = document.getElementById(id);
+  element.parentElement.classList.add("deleteItem");
+  console.log(element);
 };

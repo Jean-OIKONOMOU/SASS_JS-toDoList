@@ -21,11 +21,19 @@
     }
   }
 
+  .deleteItem {
+    opacity: 0;
+  }
+
   .item {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     padding-top: 1rem;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
 
     input[type="checkbox"] {
       text-align: center;

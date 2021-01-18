@@ -22,6 +22,21 @@ const initApp = () => {
     event.preventDefault();
     processSubmission();
   });
+  const clearButton = document.getElementById("clearItems");
+  clearButton.addEventListener("click", (event) => {
+    const list = toDoList.getList();
+    if (list.length) {
+      const confirmed = confirm("Are you sure you want to delete everything ?");
+      if (confirmed) {
+        fadeOutAnimationForAll("listItems");
+        setTimeout(() => {
+          toDoList.clearList();
+          // update persistent data
+          refreshThePage();
+        }, 500);
+      }
+    }
+  });
   // procedural
   // load list object from web storage API
   // refresh the page
@@ -132,4 +147,11 @@ const fadeOutAnimation = (id) => {
   let element = document.getElementById(id);
   element.parentElement.classList.add("deleteItem");
   console.log(element);
+};
+
+const fadeOutAnimationForAll = (id) => {
+  let children = document.getElementById(id).children;
+  for (let child of children) {
+    child.classList.add("deleteItem");
+  }
 };

@@ -22,8 +22,8 @@ const initApp = () => {
     event.preventDefault();
     processSubmission();
   });
-  const clearButton = document.getElementById("clearItems");
-  clearButton.addEventListener("click", (event) => {
+  const clearItems = document.getElementById("clearItems");
+  clearItems.addEventListener("click", (event) => {
     const list = toDoList.getList();
     if (list.length) {
       const confirmed = confirm("Are you sure you want to delete everything ?");
@@ -31,16 +31,25 @@ const initApp = () => {
         fadeOutAnimationForAll("listItems");
         setTimeout(() => {
           toDoList.clearList();
-          // update persistent data
+          updatePersistentData(toDoList.getList());
           refreshThePage();
         }, 500);
       }
     }
   });
   // procedural
-  // load list object from web storage API
-  // refresh the page
+  loadPersistentData();
   refreshThePage();
+};
+
+const loadPersistentData = () => {
+  const storedList = localStorage.getItem("myToDoList");
+  if (typeof storedList !== "string") return;
+  const parsedList = JSON.parse(storedList);
+  parsedList.forEach((itemObj) => {
+    let newToDoItem = createNewItem(itemObj._id, itemObj._item);
+    toDoList.addItemToList(newToDoItem);
+  });
 };
 
 const refreshThePage = () => {
@@ -67,7 +76,7 @@ const deleteContents = (parentElement) => {
 
 const renderList = () => {
   const list = toDoList.getList();
-  log(list);
+  // log(list);
   list.forEach((item) => {
     buildListItem(item);
   });
@@ -94,11 +103,15 @@ const addClickListenerToCheckbox = (checkbox) => {
   checkbox.addEventListener("click", (event) => {
     toDoList.removeItemFromList(checkbox.id);
     fadeOutAnimation(checkbox.id);
-    // TODO: remove it from web storage api too !!!
+    updatePersistentData(toDoList.getList());
     setTimeout(() => {
       refreshThePage();
     }, 500);
   });
+};
+
+const updatePersistentData = (listArray) => {
+  localStorage.setItem("myToDoList", JSON.stringify(listArray));
 };
 
 const clearItemEntryField = () => {
@@ -115,7 +128,7 @@ const processSubmission = () => {
   const nextItemId = calcNextItemId();
   const toDoItem = createNewItem(nextItemId, newEntryText);
   toDoList.addItemToList(toDoItem);
-  // TODO: update web storage API with the new data
+  updatePersistentData(toDoList.getList());
   refreshThePage();
 };
 
@@ -146,7 +159,7 @@ const log = (obj) => {
 const fadeOutAnimation = (id) => {
   let element = document.getElementById(id);
   element.parentElement.classList.add("deleteItem");
-  console.log(element);
+  // console.log(element);
 };
 
 const fadeOutAnimationForAll = (id) => {

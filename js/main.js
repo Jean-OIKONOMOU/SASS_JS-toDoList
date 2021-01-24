@@ -11,6 +11,7 @@ const toDoList = new ToDoList();
 /* check if the DOM is fully loaded and ready to be fiddled with*/
 document.addEventListener("readystatechange", (event) => {
   if (event.target.readyState === "complete") {
+    // TODO: read aloud the way to navigate in the app.
     initApp();
   }
 });
@@ -102,12 +103,18 @@ const buildListItem = (item) => {
 const addClickListenerToCheckbox = (checkbox) => {
   checkbox.addEventListener("click", (event) => {
     toDoList.removeItemFromList(checkbox.id);
-    fadeOutAnimation(checkbox.id);
     updatePersistentData(toDoList.getList());
+    const removedText = getLabelText(checkbox.id);
+    fadeOutAnimation(checkbox.id);
+    updateScreenReaderConfirmation(removedText, "removed from list");
     setTimeout(() => {
       refreshThePage();
     }, 500);
   });
+};
+
+const getLabelText = (checkboxId) => {
+  return document.getElementById(checkboxId).nextElementSibling.textContent;
 };
 
 const updatePersistentData = (listArray) => {
@@ -129,6 +136,7 @@ const processSubmission = () => {
   const toDoItem = createNewItem(nextItemId, newEntryText);
   toDoList.addItemToList(toDoItem);
   updatePersistentData(toDoList.getList());
+  updateScreenReaderConfirmation(newEntryText, "added");
   refreshThePage();
 };
 
@@ -167,4 +175,10 @@ const fadeOutAnimationForAll = (id) => {
   for (let child of children) {
     child.classList.add("deleteItem");
   }
+};
+
+const updateScreenReaderConfirmation = (newEntryText, actionVerb) => {
+  document.getElementById(
+    "confirmation"
+  ).textContent = `${newEntryText} ${actionVerb}.`;
 };

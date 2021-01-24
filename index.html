@@ -23,7 +23,7 @@
         <p class="PC_INFO" aria-label="TAB to move forward, SHIFT+TAB to move backwards.">TAB to move forward, SHIFT+TAB to move backwards.</p>
         <section class="listContainer">
             <div class="listTitle">
-                <h1>To-Do List</h1>
+                <h1 tabindex="0">To-Do List</h1>
                 <button id="clearItems" class="button" title="Clear selected items" aria-label="Press this button to remove all done items from the list" tabindex="0">Clear</button>
             </div>
             <hr />
@@ -37,6 +37,8 @@
                     <label for="1">TEST DATA</label>
                 </div> -->
             </div>
+            <p id="confirmation" class="confirmation" aria-live="assertive"></p>
+            <!-- the "assertive" means that it directly says whatever is in there after an action.-->
         </section>
     </main>
 </body>
